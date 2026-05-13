@@ -38,4 +38,4 @@ for _ in range(1000):
 ```
 
 ## Author
-Daniel - Creative Developer | ML Engineer
+Daniel soleimani
