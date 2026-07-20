@@ -1,0 +1,19 @@
+{
+  "env": "BipedalWalker-v3",
+  "algorithm": "PPO (Stable-Baselines3)",
+  "policy": "MLP [64, 64]",
+  "total_timesteps": 1000000,
+  "hardware": "Tesla T4 (Kaggle)",
+  "wall_time_minutes": 35,
+  "final_episode_reward": 133,
+  "classic_solved_threshold": 300,
+  "status": "partial_success_clear_locomotion",
+  "progression": [
+    {"steps": 0, "video": "video/00_untrained.mp4", "behavior": "Random flailing, falls in ~2 seconds"},
+    {"steps": 200000, "video": "video/200k_steps.mp4", "behavior": "Wobbly walking, shuffling forward"},
+    {"steps": 400000, "video": "video/400k_steps.mp4", "behavior": "Coordinated walking gait"},
+    {"steps": 600000, "video": "video/600k_steps.mp4", "behavior": "Confident running", "checkpoint": "model_600000.zip"},
+    {"steps": 800000, "video": "video/800k_steps.mp4", "behavior": "Fast, stable locomotion"},
+    {"steps": 1000000, "video": "video/1M_final.mp4", "behavior": "Full running with obstacle handling", "checkpoint": "model_final.zip"}
+  ]
+}

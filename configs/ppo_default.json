@@ -1,0 +1,43 @@
+{
+  "env_id": "BipedalWalker-v3",
+  "algorithm": "PPO",
+  "library": "stable-baselines3",
+  "policy": "MlpPolicy",
+  "total_timesteps": 1000000,
+  "n_envs": 4,
+  "seed": 42,
+  "hyperparams": {
+    "learning_rate": 0.0003,
+    "n_steps": 2048,
+    "batch_size": 64,
+    "n_epochs": 10,
+    "gamma": 0.99,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.0,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "net_arch": {
+      "pi": [64, 64],
+      "vf": [64, 64]
+    }
+  },
+  "completed_run": {
+    "hardware": "Tesla T4 (Kaggle)",
+    "wall_time_minutes": 35,
+    "final_episode_reward": 133,
+    "checkpoints_published": [
+      "model_600000.zip",
+      "model_final.zip"
+    ],
+    "videos": [
+      "video/00_untrained.mp4",
+      "video/200k_steps.mp4",
+      "video/400k_steps.mp4",
+      "video/600k_steps.mp4",
+      "video/800k_steps.mp4",
+      "video/1M_final.mp4"
+    ],
+    "notes": "Agent learns a stable walking/running gait. Classic Gym 'solved' threshold for BipedalWalker is often cited as ~300 mean return; this run demonstrates clear locomotion skill (~+133) without claiming full solve."
+  }
+}
