@@ -196,3 +196,6 @@ See [`results/training_summary.json`](./results/training_summary.json) for the p
 ## License
 
 Code is provided for portfolio / educational use. Gymnasium / Box2D remain under their respective licenses.
+
+MIT License — see [LICENSE](./LICENSE).
+
