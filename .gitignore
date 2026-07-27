@@ -26,3 +26,8 @@ video/_tmp_record/
 
 # Local dumps of Kaggle notebook source (may contain secrets — never commit)
 .tmp_kaggle/
+
+# Local interview prep (keep on disk, do not publish)
+INTERVIEW_PRESENTATION.md
+INTERVIEW_PRESENTATION_FA.md
+

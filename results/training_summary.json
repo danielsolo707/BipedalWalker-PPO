@@ -28,5 +28,17 @@
     {"steps": 600000, "video": "video/600k_steps.mp4", "behavior": "Confident running", "checkpoint": "model_600000.zip"},
     {"steps": 800000, "video": "video/800k_steps.mp4", "behavior": "Fast, stable locomotion"},
     {"steps": 1000000, "video": "video/1M_final.mp4", "behavior": "Full running with obstacle handling", "checkpoint": "model_final.zip"}
-  ]
+  ],
+  "combined_progression_video": {
+    "path": "video/progression_0_to_1M.mp4",
+    "order": [
+      "video/00_untrained.mp4",
+      "video/200k_steps.mp4",
+      "video/400k_steps.mp4",
+      "video/600k_steps.mp4",
+      "video/800k_steps.mp4",
+      "video/1M_final.mp4"
+    ],
+    "note": "Concatenated full timeline for portfolio demos; playable in-repo / on GitHub after push."
+  }
 }

@@ -20,7 +20,16 @@ Training was run on **Kaggle** ([`danielsolo1770/bipedalwalker-ppo`](https://www
 
 ## Training progression (best portfolio asset)
 
-Watch the policy improve from random collapse to coordinated running:
+Watch the policy improve from random collapse to coordinated running.
+
+### Full timeline (all stages in one video)
+
+**Play this in the repo / on GitHub:**  
+[`video/progression_0_to_1M.mp4`](./video/progression_0_to_1M.mp4)
+
+Order: untrained → 200k → 400k → 600k → 800k → 1M final (~1m17s, H.264).
+
+### Per-stage clips
 
 | Stage | Steps | Video | Behavior |
 |-------|------:|-------|----------|
@@ -30,6 +39,7 @@ Watch the policy improve from random collapse to coordinated running:
 | Strong | 600K | [`video/600k_steps.mp4`](./video/600k_steps.mp4) | Confident running · [`model_600000.zip`](./model_600000.zip) |
 | Late | 800K | [`video/800k_steps.mp4`](./video/800k_steps.mp4) | Fast, stable locomotion |
 | Final | 1M | [`video/1M_final.mp4`](./video/1M_final.mp4) | Running + obstacle handling · [`model_final.zip`](./model_final.zip) |
+| **All stages** | 0→1M | [`video/progression_0_to_1M.mp4`](./video/progression_0_to_1M.mp4) | Full learning progression (concatenated) |
 
 ---
 
