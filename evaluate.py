@@ -20,10 +20,12 @@ def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Evaluate PPO BipedalWalker agent")
     p.add_argument("--model", type=str, default="model_final.zip")
     p.add_argument("--env-id", type=str, default="BipedalWalker-v3")
+    p.add_argument("--hardcore", action="store_true")
     p.add_argument("--episodes", type=int, default=20)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--deterministic", action="store_true", default=True)
     p.add_argument("--render", action="store_true")
+    # Env max episode length is 1600; published videos used shorter rollouts (500).
     p.add_argument("--max-steps", type=int, default=1600)
     return p.parse_args()
 
@@ -35,7 +37,7 @@ def main() -> None:
         raise SystemExit(f"Model not found: {model_path}")
 
     render_mode = "human" if args.render else None
-    env = gym.make(args.env_id, render_mode=render_mode)
+    env = gym.make(args.env_id, hardcore=args.hardcore, render_mode=render_mode)
     model = PPO.load(str(model_path))
 
     returns = []
@@ -58,6 +60,8 @@ def main() -> None:
     env.close()
     summary = {
         "model": str(model_path),
+        "env_id": args.env_id,
+        "hardcore": bool(args.hardcore),
         "episodes": args.episodes,
         "mean_return": float(np.mean(returns)),
         "std_return": float(np.std(returns)),

@@ -1,13 +1,26 @@
 {
   "env": "BipedalWalker-v3",
+  "hardcore": false,
   "algorithm": "PPO (Stable-Baselines3)",
-  "policy": "MLP [64, 64]",
+  "policy": "MlpPolicy (default MLP, pi/vf [64, 64])",
   "total_timesteps": 1000000,
+  "n_envs": 1,
+  "vec_env": "DummyVecEnv",
+  "ent_coef": 0.001,
+  "checkpoint_freq": 200000,
   "hardware": "Tesla T4 (Kaggle)",
   "wall_time_minutes": 35,
   "final_episode_reward": 133,
   "classic_solved_threshold": 300,
   "status": "partial_success_clear_locomotion",
+  "kaggle_kernel": "danielsolo1770/bipedalwalker-ppo",
+  "sb3_version": "2.8.0",
+  "gymnasium_version": "1.2.0",
+  "video_settings": {
+    "max_steps": 500,
+    "fps": 30,
+    "writer": "imageio"
+  },
   "progression": [
     {"steps": 0, "video": "video/00_untrained.mp4", "behavior": "Random flailing, falls in ~2 seconds"},
     {"steps": 200000, "video": "video/200k_steps.mp4", "behavior": "Wobbly walking, shuffling forward"},

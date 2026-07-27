@@ -2,11 +2,14 @@
 
 Train a bipedal robot to **walk, run, and handle terrain** using **Proximal Policy Optimization (PPO)** on Gymnasium’s `BipedalWalker-v3`.
 
+Training was run on **Kaggle** ([`danielsolo1770/bipedalwalker-ppo`](https://www.kaggle.com/code/danielsolo1770/bipedalwalker-ppo)); this repo packages the real training setup as clean CLIs plus the published checkpoints and progression videos.
+
 | | |
 |---|---|
 | **Algorithm** | PPO (Stable-Baselines3) |
-| **Policy** | MLP `[64, 64]` |
-| **Timesteps** | 1,000,000 |
+| **Policy** | `MlpPolicy` (default pi/vf `[64, 64]`) |
+| **Env** | `BipedalWalker-v3` · `hardcore=False` · `DummyVecEnv` × 1 |
+| **Timesteps** | 1,000,000 · checkpoint every 200k |
 | **Hardware** | Tesla T4 (Kaggle) · ~35 min |
 | **Final episode reward** | **+133** |
 | **Artifacts** | Checkpoints + progression videos |
@@ -44,7 +47,7 @@ Observation (24-D state)
    (GAE-λ advantages, entropy / value coeffs as configured)
 ```
 
-### Hyperparameters (published run)
+### Hyperparameters (published Kaggle run)
 
 | Param | Value |
 |-------|------:|
@@ -55,10 +58,15 @@ Observation (24-D state)
 | `gamma` | 0.99 |
 | `gae_lambda` | 0.95 |
 | `clip_range` | 0.2 |
-| `ent_coef` | 0.0 |
-| Network | pi/vf `[64, 64]` |
+| `ent_coef` | **0.001** |
+| `vf_coef` | 0.5 (SB3 default) |
+| Network | SB3 `MlpPolicy` default (pi/vf `[64, 64]`) |
+| Vec env | `DummyVecEnv` × 1 |
+| Seed | not fixed in the notebook |
 
 Full config: [`configs/ppo_default.json`](./configs/ppo_default.json)
+
+Checkpoint artifacts report **Stable-Baselines3 2.8.0**, **Gymnasium 1.2.0**, CUDA GPU enabled (Kaggle T4).
 
 ---
 
@@ -66,9 +74,9 @@ Full config: [`configs/ppo_default.json`](./configs/ppo_default.json)
 
 ```
 BipedalWalker-PPO/
-├── train.py              # PPO training + checkpoints + eval callback
+├── train.py              # PPO training + model_{steps}.zip checkpoints
 ├── evaluate.py           # mean ± std return over N episodes
-├── record_video.py       # render policy (or random) to MP4
+├── record_video.py       # imageio rollouts (matches Kaggle video cell)
 ├── model_final.zip       # 1M-step policy
 ├── model_600000.zip      # mid-training checkpoint
 ├── configs/ppo_default.json
@@ -93,7 +101,7 @@ pip install -r requirements.txt
 
 ```bash
 pip install swig
-pip install gymnasium[box2d]
+pip install gymnasium[box2d] box2d-py
 ```
 
 ---
@@ -125,6 +133,8 @@ python evaluate.py --model model_final.zip --episodes 20
 
 ### Record a video
 
+Published progression clips used **500 steps @ 30 FPS** via imageio:
+
 ```bash
 python record_video.py --model model_final.zip --output video/my_rollout.mp4
 python record_video.py --untrained --output video/random.mp4
@@ -132,11 +142,15 @@ python record_video.py --untrained --output video/random.mp4
 
 ### Train from scratch (optional — models already provided)
 
+Reproduces the Kaggle recipe (1M steps, checkpoint every 200k as `model_*.zip`):
+
 ```bash
-python train.py --timesteps 1000000 --n-envs 4 --output-dir models --tensorboard
+python train.py --config configs/ppo_default.json --output-dir .
+# or:
+python train.py --timesteps 1000000 --n-envs 1 --checkpoint-freq 200000 --output-dir .
 ```
 
-Intermediate checkpoints are saved under `models/checkpoints/`; final weights go to `models/model_final.zip`.
+Use `--n-envs 4` only if you want faster wall-clock training; the published artifacts used a single env. Optional TensorBoard: `--tensorboard`.
 
 ---
 
@@ -156,10 +170,10 @@ See [`results/training_summary.json`](./results/training_summary.json) for the p
 
 ## What this repo demonstrates
 
-- End-to-end **deep RL experiment** with a standard continuous-control benchmark
-- **PPO** usage via Stable-Baselines3 with explicit hyperparameters
+- End-to-end **deep RL experiment** on a standard continuous-control benchmark
+- **PPO** via Stable-Baselines3 with hyperparameters aligned to the real Kaggle run
 - Checkpointing + **visual training curriculum** (strong storytelling for portfolios)
-- Evaluation and video tooling — not just a notebook dump
+- Evaluation and video tooling — clean CLIs, not a notebook dump
 
 ---
 

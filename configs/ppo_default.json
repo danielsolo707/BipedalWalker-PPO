@@ -1,11 +1,13 @@
 {
   "env_id": "BipedalWalker-v3",
+  "hardcore": false,
   "algorithm": "PPO",
   "library": "stable-baselines3",
   "policy": "MlpPolicy",
   "total_timesteps": 1000000,
-  "n_envs": 4,
-  "seed": 42,
+  "n_envs": 1,
+  "seed": null,
+  "checkpoint_freq": 200000,
   "hyperparams": {
     "learning_rate": 0.0003,
     "n_steps": 2048,
@@ -14,18 +16,25 @@
     "gamma": 0.99,
     "gae_lambda": 0.95,
     "clip_range": 0.2,
-    "ent_coef": 0.0,
+    "ent_coef": 0.001,
     "vf_coef": 0.5,
     "max_grad_norm": 0.5,
-    "net_arch": {
-      "pi": [64, 64],
-      "vf": [64, 64]
-    }
+    "net_arch": null,
+    "net_arch_note": "null = SB3 MlpPolicy default (pi/vf [64, 64] for continuous control). Kaggle notebook did not pass policy_kwargs."
+  },
+  "video_recording": {
+    "max_steps": 500,
+    "fps": 30,
+    "library": "imageio"
   },
   "completed_run": {
+    "kaggle_kernel": "danielsolo1770/bipedalwalker-ppo",
     "hardware": "Tesla T4 (Kaggle)",
     "wall_time_minutes": 35,
     "final_episode_reward": 133,
+    "sb3_version": "2.8.0",
+    "gymnasium_version": "1.2.0",
+    "vec_env": "DummyVecEnv x1",
     "checkpoints_published": [
       "model_600000.zip",
       "model_final.zip"

@@ -10,6 +10,7 @@ logs/
 models/checkpoints/
 models/best/
 models/run_config.json
+run_config.json
 tb/
 runs/
 *.log
@@ -22,3 +23,6 @@ Thumbs.db
 
 # Temp video renders
 video/_tmp_record/
+
+# Local dumps of Kaggle notebook source (may contain secrets — never commit)
+.tmp_kaggle/
