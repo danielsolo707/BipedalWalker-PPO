@@ -2,7 +2,7 @@
 
 Train a bipedal robot to **walk, run, and handle terrain** using **Proximal Policy Optimization (PPO)** on Gymnasium’s `BipedalWalker-v3`.
 
-Training was run on **Kaggle** ([`danielsolo1770/bipedalwalker-ppo`](https://www.kaggle.com/code/danielsolo1770/bipedalwalker-ppo)); this repo packages the real training setup as clean CLIs plus the published checkpoints and progression videos.
+This repository packages the training setup as documented command-line interfaces, together with published checkpoints and progression videos.
 
 | | |
 |---|---|
@@ -195,8 +195,8 @@ See [`results/training_summary.json`](./results/training_summary.json) for the p
 
 - End-to-end **deep RL experiment** on a standard continuous-control benchmark
 - **PPO** via Stable-Baselines3 with hyperparameters aligned to the real Kaggle run
-- Checkpointing + **visual training curriculum** (strong storytelling for portfolios)
-- Evaluation and video tooling — clean CLIs, not a notebook dump
+- Checkpointing + visual record of policy behavior across training stages
+- Evaluation and video tooling through documented command-line interfaces
 
 ---
 
@@ -208,7 +208,5 @@ See [`results/training_summary.json`](./results/training_summary.json) for the p
 
 ## License
 
-Code is provided for portfolio / educational use. Gymnasium / Box2D remain under their respective licenses.
-
-MIT License — see [LICENSE](./LICENSE).
+Code is released under the MIT License; see [LICENSE](./LICENSE). Gymnasium and Box2D remain under their respective licenses.
 
