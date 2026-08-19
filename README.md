@@ -114,6 +114,10 @@ pip install swig
 pip install gymnasium[box2d] box2d-py
 ```
 
+### Continuous integration (CPU-only)
+
+GitHub Actions installs the runtime dependencies, compiles the three CLIs, and checks their command-line interfaces on every push and pull request. It does not train an agent, render a rollout, or claim an evaluation result; the reproducible evaluation command below remains the source of any future reported metrics.
+
 ---
 
 ## Usage
@@ -135,11 +139,20 @@ for _ in range(1000):
         obs, _ = env.reset()
 ```
 
-### Evaluate (mean return)
+### Reproducible evaluation
+
+Evaluate the published checkpoint across a fixed sequence of episode seeds and save a machine-readable artifact:
 
 ```bash
-python evaluate.py --model model_final.zip --episodes 20
+python evaluate.py \
+  --model model_final.zip \
+  --episodes 20 \
+  --seed 42 \
+  --max-steps 1600 \
+  --output results/evaluation_seed42.json
 ```
+
+The JSON artifact records the checkpoint, environment, seed policy, deterministic inference setting, per-episode returns and lengths, plus mean, standard deviation, minimum and maximum return. This is an evaluation procedure, not a claim about the historical training reward; commit a generated artifact only after running it in a matching environment.
 
 ### Record a video
 

@@ -27,6 +27,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--render", action="store_true")
     # Env max episode length is 1600; published videos used shorter rollouts (500).
     p.add_argument("--max-steps", type=int, default=1600)
+    p.add_argument(
+        "--output",
+        type=Path,
+        help="Optional path for a JSON evaluation artifact (for example results/evaluation.json).",
+    )
     return p.parse_args()
 
 
@@ -35,6 +40,10 @@ def main() -> None:
     model_path = Path(args.model)
     if not model_path.exists():
         raise SystemExit(f"Model not found: {model_path}")
+    if args.episodes < 1:
+        raise SystemExit("--episodes must be at least 1")
+    if args.max_steps < 1:
+        raise SystemExit("--max-steps must be at least 1")
 
     render_mode = "human" if args.render else None
     env = gym.make(args.env_id, hardcore=args.hardcore, render_mode=render_mode)
@@ -68,10 +77,20 @@ def main() -> None:
         "min_return": float(np.min(returns)),
         "max_return": float(np.max(returns)),
         "mean_length": float(np.mean(lengths)),
+        "seed": args.seed,
+        "deterministic_policy": bool(args.deterministic),
+        "max_steps": args.max_steps,
+        "episode_returns": [float(value) for value in returns],
+        "episode_lengths": lengths,
         "reference_training_reward": 133,
         "classic_solved_threshold": 300,
     }
-    print("\n" + json.dumps(summary, indent=2))
+    payload = json.dumps(summary, indent=2)
+    if args.output:
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(payload + "\n", encoding="utf-8")
+        print(f"Saved evaluation artifact: {args.output}")
+    print("\n" + payload)
 
 
 if __name__ == "__main__":
