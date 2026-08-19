@@ -18,7 +18,7 @@ Training was run on **Kaggle** ([`danielsolo1770/bipedalwalker-ppo`](https://www
 
 ---
 
-## Training progression (best portfolio asset)
+## Training progression
 
 Watch the policy improve from random collapse to coordinated running.
 
